@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS product_image;
-DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS offer;
 DROP TABLE IF EXISTS request;
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS users;
 
 
 CREATE TABLE users (
@@ -22,6 +22,12 @@ CREATE TABLE users (
     session_expires_at TIMESTAMP
 );
 
+CREATE TABLE category (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR,
+    description VARCHAR
+);
+
 CREATE TABLE request (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id),
@@ -35,12 +41,6 @@ CREATE TABLE request (
     expiry_date DATE,
     status VARCHAR,
     post_date DATE
-);
-
-CREATE TABLE category (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR,
-    description VARCHAR
 );
 
 CREATE TABLE offer (
