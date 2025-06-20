@@ -19,7 +19,7 @@ class RequestUpdate(BaseModel):
     title: Optional[str] = Field(None, min_length=1, max_length=255)
     description: Optional[str] = Field(None, min_length=1)
     quantity: Optional[int] = Field(None, gt=0)
-    price_range: Optional[str] = None
+    price_range: Optional[int] = None
     location: Optional[str] = Field(None, min_length=1)
     location_range: Optional[str] = None
     expiry_date: Optional[datetime] = None
@@ -28,8 +28,17 @@ class RequestUpdate(BaseModel):
 
 class ResquestOut(RequestCreate):
     id: int
+    user_id: int
+    category_id: int
+    title: Optional[str] = None
+    description: Optional[str] = None
+    quantity: Optional[int] = None
+    price_range: Optional[int] = None
+    location: Optional[str] = None
+    location_range: Optional[str] = None
+    expiry_date: Optional[datetime] = None
     post_date: datetime
-    status: str = "open"
+    status: Optional[str] = None
 
 
 class OfferCreate(BaseModel):

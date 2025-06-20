@@ -44,15 +44,37 @@ def get_request(user_id: int) -> list[ResquestOut]:
     return request
 
 
-def update_request(request_id: int) -> ResquestOut | None:
+def update_request(
+    request_id: int,
+    title: str | None = None,
+    description: str | None = None,
+    status: str | None = None,
+    quantity: int | None = None,
+    price_range: int | None = None,
+    location: str | None = None,
+    location_range: str | None = None,
+    expiry_date: datetime | None = None,
+) -> ResquestOut | None:
     db = SessionLocal()
     db_request = db.query(DBRequest).filter(DBRequest.id == request_id).first()
-    if not db_request:
-        db.close()
-        return None
 
     # Update the request status or any other fields as needed
-    db_request.status = "updated"  # Example update
+    if status is not None:
+        db_request.status = status
+    if title is not None:
+        db_request.title = title
+    if description is not None:
+        db_request.description = description
+    if quantity is not None:
+        db_request.quantity = quantity
+    if price_range is not None:
+        db_request.price_range = price_range
+    if location is not None:
+        db_request.location = location
+    if location_range is not None:
+        db_request.location_range = location_range
+    if expiry_date is not None:
+        db_request.expiry_date = expiry_date
     db.commit()
 
     updated_request = ResquestOut(

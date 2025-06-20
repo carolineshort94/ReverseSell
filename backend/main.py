@@ -62,9 +62,29 @@ async def get_request(user_id: int):
     return db.get_request(user_id)
 
 
-@app.post("/api/update_request", response_model=ResquestOut)
-async def update_request(request_id: int, description: str, status: str, ):
-    return db.update_request(request_id, description, status,
+@app.post("/api/update_request", response_model=RequestUpdate | None)
+async def update_request(
+    request_id: int,
+    title: str | None = None,
+    description: str | None = None,
+    status: str | None = None,
+    quantity: int | None = None,
+    price_range: int | None = None,
+    location: str | None = None,
+    location_range: str | None = None,
+    expiry_date: datetime | None = None,
+):
+    return db.update_request(
+        request_id,
+        title,
+        description,
+        status,
+        quantity,
+        price_range,
+        location,
+        location_range,
+        expiry_date,
+    )
 
 
 @app.get("/{file_path}", response_class=FileResponse)
