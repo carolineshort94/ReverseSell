@@ -10,6 +10,7 @@ from fastapi import (
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from starlette.middleware.sessions import SessionMiddleware
 from fastapi.staticfiles import StaticFiles
 from datetime import datetime
 from pathlib import Path
@@ -35,6 +36,7 @@ from models import (
 )
 from sqlalchemy.orm import Session
 from rich import print  # For rich console output
+import db
 
 app = FastAPI()
 
@@ -42,6 +44,8 @@ origins = [
     "http://localhost",
     "http://localhost:3000",
 ]
+
+app.add_middleware
 
 app.add_middleware(
     CORSMiddleware,
@@ -52,12 +56,15 @@ app.add_middleware(
 )
 
 
-@app.get("/api/requests", response_class=list[ResquestOut])
-async def get_request(request: Request):
-    user_id = request.session.get("user_id")
-    if not user_id:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+@app.get("/api/requests", response_model=list[ResquestOut])
+async def get_request(user_id: int):
+
     return db.get_request(user_id)
+
+
+@app.post("/api/update_request", response_model=ResquestOut)
+async def update_request(request_id: int, description: str, status: str, ):
+    return db.update_request(request_id, description, status,
 
 
 @app.get("/{file_path}", response_class=FileResponse)
@@ -65,9 +72,3 @@ def get_file(file_path: str):
     if Path("frontend/" + file_path).is_file():
         return "frontend/" + file_path
     raise HTTPException(status_code=404, detail="File Not Found")
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run("main:app", host="localhost", port=8000, reload=True)

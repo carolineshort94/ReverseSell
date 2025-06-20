@@ -35,7 +35,7 @@ class DBRequest(Base):
     quantity: Mapped[int] = mapped_column(nullable=False)
     price_range: Mapped[Optional[str]] = mapped_column(default=None)
     location: Mapped[str] = mapped_column(nullable=False)
-    location_range: Mapped[Optional[int]] = mapped_column(default=None)
+    location_range: Mapped[Optional[str]] = mapped_column(default=None)
     expiry_date: Mapped[Optional[datetime]] = mapped_column(default=None)
     status: Mapped[str] = mapped_column(default="open")
     post_date: Mapped[datetime] = mapped_column(default=datetime.utcnow)

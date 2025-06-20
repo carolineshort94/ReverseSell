@@ -9,9 +9,9 @@ class RequestCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=255)
     description: str = Field(..., min_length=1)
     quantity: int = Field(..., gt=0)
-    price_range: Optional[str] = None
+    price_range: Optional[int] = None
     location: str = Field(..., min_length=1)
-    location_range: Optional[int] = None
+    location_range: Optional[str] = None
     expiry_date: Optional[datetime] = None
 
 
@@ -21,7 +21,7 @@ class RequestUpdate(BaseModel):
     quantity: Optional[int] = Field(None, gt=0)
     price_range: Optional[str] = None
     location: Optional[str] = Field(None, min_length=1)
-    location_range: Optional[int] = None
+    location_range: Optional[str] = None
     expiry_date: Optional[datetime] = None
     status: Optional[str] = None
 
