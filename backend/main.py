@@ -1,41 +1,13 @@
 from fastapi import (
     FastAPI,
     HTTPException,
-    Depends,
-    status,
-    Request,
-    UploadFile,
-    File,
-    Form,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from starlette.middleware.sessions import SessionMiddleware
-from fastapi.staticfiles import StaticFiles
 from datetime import datetime
 from pathlib import Path
-import os
-import json
-from starlette.responses import JSONResponse
-from schemas import (
-    RequestCreate,
-    RequestUpdate,
-    ResquestOut,
-    OfferCreate,
-    OfferUpdate,
-    OfferOut,
-    ProductImageCreate,
-    MessageCreate,
-)
-from models import (
-    DBRequest,
-    DBCategory,
-    DBOffer,
-    DBProduct_image,
-    DBMessage,
-)
-from sqlalchemy.orm import Session
-from rich import print  # For rich console output
+from schemas import RequestUpdate
+from auth import auth_router
 import db
 
 app = FastAPI()
@@ -56,10 +28,8 @@ app.add_middleware(
 )
 
 
-@app.get("/api/requests", response_model=list[ResquestOut])
-async def get_request(user_id: int):
-
-    return db.get_request(user_id)
+# Auth route
+app.include_router(auth_router, prefix="/api")
 
 
 @app.post("/api/update_request", response_model=RequestUpdate | None)

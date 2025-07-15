@@ -1,6 +1,37 @@
-from pydantic import BaseModel, Field
-from typing import Optional, List, Any
+from pydantic import BaseModel, Field, EmailStr
+from typing import Optional
 from datetime import datetime
+
+
+class LoginCredentials(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class SignupCredentials(BaseModel):
+    email: EmailStr
+    password: str
+    first_name: str
+    last_name: str
+    contact_phone: str
+
+
+class SucessResponse(BaseModel):
+    success: bool
+
+
+class SecretResponse(BaseModel):
+    secret: str
+
+
+class UserPublicDetails(BaseModel):
+    email: EmailStr
+    first_name: str
+    last_name: str
+    contact_phone: str
+    registration_date: datetime
+    profile_description: Optional[str] = None
+    profile_img: Optional[str] = None
 
 
 class RequestCreate(BaseModel):

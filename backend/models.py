@@ -7,8 +7,8 @@ from datetime import datetime
 Base = declarative_base()
 
 
-class DBUsers(Base):
-    __tablename__ = "users"
+class DBAccount(Base):
+    __tablename__ = "account"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     email: Mapped[str] = mapped_column(unique=True, nullable=False, index=True)
@@ -16,9 +16,9 @@ class DBUsers(Base):
     first_name: Mapped[str] = mapped_column(nullable=False)
     last_name: Mapped[str] = mapped_column(nullable=False)
     contact_phone: Mapped[str] = mapped_column(nullable=False)
-    resgistration_date: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    registration_date: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     last_login: Mapped[Optional[datetime]] = mapped_column(default=None)
-    profile_desciription: Mapped[Optional[str]] = mapped_column(default=None)
+    profile_description: Mapped[Optional[str]] = mapped_column(default=None)
     profile_img: Mapped[Optional[str]] = mapped_column(default=None)
     session_token: Mapped[Optional[str]] = mapped_column(default=None)
     session_expires_at: Mapped[Optional[datetime]] = mapped_column(default=None)
