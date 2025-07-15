@@ -76,3 +76,19 @@ def invalidate_session(email: str) -> Optional[UserPublicDetails]:
             profile_description=account.profile_description,
             profile_img=account.profile_img,
         )
+
+
+def get_user_public_details(email: str) -> Optional[UserPublicDetails]:
+    with SessionLocal() as db:
+        account = db.query(DBAccount).filter(DBAccount.email == email).first()
+        if not account:
+            return None
+        return UserPublicDetails(
+            email=account.email,
+            first_name=account.first_name,
+            last_name=account.last_name,
+            contact_phone=account.contact_phone,
+            registration_date=account.registration_date,
+            profile_description=account.profile_description,
+            profile_img=account.profile_img,
+        )
