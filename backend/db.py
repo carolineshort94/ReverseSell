@@ -8,7 +8,7 @@ from models import (
     DBOffer,
     DBProduct_image,
     DBMessage,
-    DBUsers,
+    DBAccount,
     Base,
 )
 from schemas import ResquestOut
