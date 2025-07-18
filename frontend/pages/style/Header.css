@@ -1,0 +1,27 @@
+.hearder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: linear-gradient(to right, #2563eb, #6366f1);
+    color: white;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav button {
+    margin-left: 1rem;
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.nav button:hover {
+    text-decoration: underline;
+}
