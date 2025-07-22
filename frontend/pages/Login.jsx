@@ -17,28 +17,37 @@ export default function Login() {
         e.preventDefault();
         setError("");
 
-        const res = await fetch(`${API_BASE}/api/login`, {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
-        })
+        try {
+            const res = await fetch(`${API_BASE}/api/login`, {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            })
+
+            if (res.ok) {
+                await refreshUser();
+                navigate("/");
+            } else {
+                const data = await res.json();
+                setError(data.detail || "Login failed")
+            }
+
+        } catch (err) {
+            console.error("Login error:", err);
+            setError("Something went wrong. Please try again.")
+        }
     }
 
-    if (res.ok) {
-        await refreshUser();
-        navigate("/");
-    } else {
-        const data = await res.json();
-        setError(data.detail || "Login failed")
-    }
+
+
 
     return (
         <div>
             <h1>Login</h1>
             <form onSubmit={handleLogin}>
                 <div>
-                    <lable>Username:</lable>
+                    <label>Username:</label>
                     <input
                         type="text"
                         value={username}

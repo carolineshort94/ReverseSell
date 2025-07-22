@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/AuthProvider";
+import { AuthContext } from "../context/AuthContext";
 import Header from "./Header"
+import Footer from "./Footer"
 import "./style/Home.css"
 
 
@@ -49,7 +50,9 @@ export default function HomePage() {
                 </section>
 
 
+
             </main>
+            <Footer />
 
         </>
     )

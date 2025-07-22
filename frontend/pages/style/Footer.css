@@ -1,0 +1,17 @@
+.footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: #111827;
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+.footer-links {
+    margin-top: 0.5rem;
+}
+
+.footer-links a {
+    color: #9ca3af;
+    text-decoration: underline;
+    margin: 0 0.75rem;
+}
