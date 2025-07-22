@@ -12,24 +12,33 @@ const API_BASE = "http://localhost:8000";
  */
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     const refreshUser = useCallback(async () => {
-        const res = await fetch(`${API_BASE}/api/me`, {
-            credentials: "include"
-        });
-        if (res.ok) {
-            setUser(await res.json());
-        } else {
-            setUser(null);
+        try {
+            const res = await fetch(`${API_BASE}/api/me`, {
+                credentials: "include"
+            });
+            if (res.ok) {
+                setUser(await res.json());
+            } else {
+                setUser(null);
+            }
+        } catch (err) {
+            console.error("Failed to refresed user:", err);
+            setUser(null)
         }
     }, [])
 
     const logout = async () => {
-        await fetch(`${API_BASE}/api/logout`, {
-            method: "GET",
-            credentials: "include",
-        });
+        try {
+            await fetch(`${API_BASE}/api/logout`, {
+                method: "GET",
+                credentials: "include",
+            });
+        } catch (err) {
+            console.error("Logout error:", err)
+        }
         setUser(null);
         navigate("/");
     };

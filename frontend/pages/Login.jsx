@@ -11,7 +11,7 @@ export default function Login() {
     const [error, setError] = useState("");
 
     const { refreshUser } = userAuth();
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -43,7 +43,7 @@ export default function Login() {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        requires
+                        required
                     />
                 </div>
                 <div>

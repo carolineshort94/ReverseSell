@@ -32,6 +32,22 @@ export default function HomePage() {
                         View Open Requests</Link>
                 </aside>
 
+                <section className="requests-section">
+                    <h2>Latest Open Requests</h2>
+                    {requests.map((req) => (
+                        <div key={req.id} className="request-card">
+                            <h3>{req.title}</h3>
+                            <p>{req.description}</p>
+                            <div className="expires">Expires: {formatDate(req.expiry_date)}</div>
+                            <Link to={`/requests/${req.id}`} className="view-link">
+                                View Details & Offers →
+                            </Link>
+                        </div>
+                    ))}
+
+                    <button className="load-more">Load More Requests</button>
+                </section>
+
 
             </main>
 
