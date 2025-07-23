@@ -57,7 +57,7 @@ class RequestUpdate(BaseModel):
     status: Optional[str] = None
 
 
-class ResquestOut(RequestCreate):
+class RequestOut(RequestCreate):
     id: int
     user_id: int
     category_id: int
