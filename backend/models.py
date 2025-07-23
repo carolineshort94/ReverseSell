@@ -59,6 +59,7 @@ class DBOffer(Base):
     offer_price: Mapped[float] = mapped_column(nullable=False)
     offer_quantity: Mapped[int] = mapped_column(nullable=False)
     seller_location: Mapped[str] = mapped_column(nullable=False)
+    product_link: Mapped[Optional[str]] = mapped_column(default=None)
     delivery_time: Mapped[Optional[int]] = mapped_column(default=None)
     warranty: Mapped[Optional[str]] = mapped_column(default=None)
     offer_date: Mapped[datetime] = mapped_column(default=datetime.utcnow)

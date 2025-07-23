@@ -11,7 +11,7 @@ from models import (
     DBAccount,
     Base,
 )
-from schemas import RequestOut, RequestCreate
+from schemas import RequestOut, RequestCreate, OfferCreate, OfferOut
 from config import DATABASE_URL
 
 engine = create_engine(DATABASE_URL)
@@ -73,3 +73,39 @@ def delete_request(request_id: int) -> bool:
     db.commit()
     db.close()
     return True
+
+
+def create_offer(data: OfferCreate) -> OfferOut:
+    db = SessionLocal()
+    new_offer = DBOffer(**data.dict())
+    db.add(new_offer)
+    db.commit()
+    db.refresh(new_offer)
+    result = OfferOut.from_orm(new_offer)
+    db.close()
+    return result
+
+
+def get_offers_by_request(request_id: int) -> list[OfferOut]:
+    db = SessionLocal()
+    db_offers = db.query(DBOffer).filter(DBOffer.request_id == request_id).all()
+    offers = [OfferOut.from_orm(offer) for offer in db_offers]
+    db.close()
+    return offers
+
+
+def update_offer(offer_id: int, data: OfferCreate) -> OfferOut:
+    db = SessionLocal()
+    offer_to_update = db.query(DBOffer).filter(DBOffer.id == offer_id).first()
+    if not offer_to_update:
+        db.close()
+        raise ValueError("Offer not found")
+
+    for key, value in data.dict().items():
+        setattr(offer_to_update, key, value)
+
+    db.commit()
+    db.refresh(offer_to_update)
+    result = OfferOut.from_orm(offer_to_update)
+    db.close()
+    return result

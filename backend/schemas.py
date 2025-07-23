@@ -80,20 +80,21 @@ class OfferCreate(BaseModel):
     request_id: int
     user_id: int
     offer_description: Optional[str] = None
-    offer_price: float = Field(..., gt=0)
-    offer_quantity: int = Field(..., gt=0)
+    offer_price: Optional[float] = None
+    offer_quantity: Optional[int] = None
+    seller_location: Optional[str] = None
+    product_link = Optional[str] = None
+    delivery_date: Optional[datetime] = None
+    warranty: Optional[str] = None
+    offer_date: Optional[date] = date.today()
+    status: Optional[str] = "pending"
 
-
-class OfferUpdate(BaseModel):
-    offer_description: Optional[str] = None
-    offer_price: Optional[float] = Field(None, gt=0)
-    offer_quantity: Optional[int] = Field(None, gt=0)
+    class Config:
+        orm_mode = True
 
 
 class OfferOut(OfferCreate):
     id: int
-    offer_date: datetime
-    status: str = "pending"
 
 
 class ProductImageCreate(BaseModel):
