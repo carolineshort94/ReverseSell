@@ -1,154 +1,31 @@
-/* Global page layout */
-.home-page {
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    background-color: #f9fafb;
-    min-height: calc(100vh - 100px);
-    /* adjust based on your header/footer */
-}
-
-/* Left sidebar */
-.sidebar {
-    background: white;
-    border-radius: 8px;
-    padding: 1.5rem;
-    width: 300px;
-    flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-.sidebar h2,
-.sidebar h3 {
-    margin-top: 0;
-}
-
-.sidebar p {
-    font-size: 0.95rem;
-    color: #444;
-    margin-bottom: 1.25rem;
-}
-
-.button {
-    display: block;
-    text-align: center;
-    padding: 0.75rem;
-    font-weight: bold;
-    border-radius: 6px;
+.header {
+    background-color: #1d4ed8;
+    /* Tailwind's blue-700 */
+    padding: 1rem;
     color: white;
-    text-decoration: none;
-    margin-bottom: 1rem;
-    transition: background 0.2s ease;
-}
-
-.button.green {
-    background-color: #22c55e;
-}
-
-.button.green:hover {
-    background-color: #16a34a;
-}
-
-.button.purple {
-    background-color: #7c3aed;
-}
-
-.button.purple:hover {
-    background-color: #6d28d9;
-}
-
-/* Right content section */
-.requests-section {
-    flex: 1;
-}
-
-.requests-section h2 {
-    margin-bottom: 1.5rem;
-}
-
-/* Each request card */
-.request-card {
-    background: white;
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-.request-card h3 {
-    margin: 0 0 0.5rem;
-}
-
-.request-card p {
-    font-size: 0.95rem;
-    color: #333;
-    margin-bottom: 0.75rem;
-}
-
-/* Tags */
-.tags {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.tag {
-    background: #e5e7eb;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.8rem;
-    border-radius: 999px;
-    color: #333;
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-/* Expiry and link */
-.expires {
-    font-size: 0.85rem;
-    color: #888;
-}
-
-.view-link {
-    display: inline-block;
-    margin-top: 0.5rem;
-    font-weight: 500;
-    color: #3b82f6;
+.nav-links a,
+.login-btn {
+    color: white;
+    margin-left: 1rem;
     text-decoration: none;
-}
-
-.view-link:hover {
-    text-decoration: underline;
-}
-
-/* Load more button */
-.load-more {
-    background: #e5e7eb;
-    border: none;
-    padding: 0.75rem 1.5rem;
     font-weight: 500;
-    border-radius: 6px;
+}
+
+.login-btn {
+    background-color: #3b82f6;
+    /* Tailwind's blue-500 */
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
     cursor: pointer;
-    margin-top: 1rem;
-}
-
-.load-more:hover {
-    background: #d1d5db;
-}
-
-/* Footer */
-.footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    background-color: #111827;
-    color: #9ca3af;
-    font-size: 0.875rem;
-}
-
-.footer-links {
-    margin-top: 0.5rem;
-}
-
-.footer-links a {
-    color: #9ca3af;
-    text-decoration: underline;
-    margin: 0 0.75rem;
 }
