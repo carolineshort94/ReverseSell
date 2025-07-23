@@ -18,39 +18,31 @@ export default function HomePage() {
     return (
         <>
             <Header />
-            <main className="home-page">
+            <main className="main-content">
                 <aside className="sidebar">
                     <h2>What do you need?</h2>
-                    <p>Tell us what product or service you're
-                        looking for!
-                    </p>
-                    <Link to='/new-request' className='button green'>
-                        Post a New Request</Link>
+                    <p>Tell us what product or service you're looking for!</p>
+                    <button className="primary-btn">Post a New Request</button>
 
-                    <h3>Are you a Seller?</h3>
+                    <h2>Are you a Seller?</h2>
                     <p>Find matching requests and submit your offers.</p>
-                    <Link to='/requests' className='button purple'>
-                        View Open Requests</Link>
+                    <button className="secondary-btn">View Open Requests</button>
                 </aside>
 
-                <section className="requests-section">
+                <section className="requests">
                     <h2>Latest Open Requests</h2>
-                    {requests.map((req) => (
-                        <div key={req.id} className="request-card">
-                            <h3>{req.title}</h3>
-                            <p>{req.description}</p>
-                            <div className="expires">Expires: {formatDate(req.expiry_date)}</div>
-                            <Link to={`/requests/${req.id}`} className="view-link">
-                                View Details & Offers →
-                            </Link>
+                    <div className="request-card">
+                        <h3>Looking for a custom-built PC</h3>
+                        <p>Need a high-performance gaming PC...</p>
+                        <div className="tags">
+                            <span className="tag blue">Electronics</span>
+                            <span className="tag green">Gaming</span>
+                            <span className="tag pink">Custom Build</span>
                         </div>
-                    ))}
-
-                    <button className="load-more">Load More Requests</button>
+                        <p className="expires">Expires in: 3 days</p>
+                    </div>
+                    <button className="load-btn">Load More Requests</button>
                 </section>
-
-
-
             </main>
             <Footer />
 
