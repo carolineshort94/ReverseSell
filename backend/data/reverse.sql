@@ -31,7 +31,7 @@ CREATE TABLE category (
 
 CREATE TABLE request (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id),
+    account_id INT REFERENCES account(id),
     category_id INT REFERENCES category(id),
     title VARCHAR,
     description TEXT,
@@ -47,7 +47,7 @@ CREATE TABLE request (
 CREATE TABLE offer (
     id SERIAL PRIMARY KEY,
     request_id INT REFERENCES request(id),
-    user_id INT REFERENCES users(id),
+    account_id INT REFERENCES account(id),
     offer_description TEXT,
     offer_price FLOAT,
     offer_quantity INT,
@@ -69,8 +69,8 @@ CREATE TABLE product_image (
 
 CREATE TABLE message (
     id SERIAL PRIMARY KEY,
-    sender_id INT REFERENCES users(id),
-    receiver_id INT REFERENCES users(id),
+    sender_id INT REFERENCES account(id),
+    receiver_id INT REFERENCES account(id),
     offer_id INT REFERENCES offer(id),
     content TEXT,
     timestamp DATE,
@@ -78,7 +78,7 @@ CREATE TABLE message (
 );
 
 -- Users Table
-INSERT INTO users (email, password_hash, user_type, first_name, last_name, contact_phone, registration_date, last_login, profile_description, profile_img, session_token, session_expires_at)
+INSERT INTO account (email, password_hash, user_type, first_name, last_name, contact_phone, registration_date, last_login, profile_description, profile_img, session_token, session_expires_at)
 VALUES
 ('alice@example.com', 'hashed_pw_1', 'buyer', 'Alice', 'Johnson', '555-1234', '2024-01-15', '2025-06-15', 'Looking for sustainable goods.', 'alice.jpg', 'token123', '2025-06-30 12:00:00'),
 ('bob@example.com', 'hashed_pw_2', 'seller', 'Bob', 'Smith', '555-5678', '2023-11-20', '2025-06-18', 'Experienced vendor of tech items.', 'bob.png', 'token456', '2025-06-28 15:00:00'),
@@ -93,13 +93,13 @@ VALUES
 
 
 -- Request Table
-INSERT INTO request (user_id, category_id, title, description, quantity, price_range, location, location_range, expiry_date, status, post_date)
+INSERT INTO request (account_id, category_id, title, description, quantity, price_range, location, location_range, expiry_date, status, post_date)
 VALUES
 (1, 1, 'Looking for a used laptop', 'I need a reliable laptop for travel.', 1, 500.00, 'San Francisco', '10 miles', '2025-07-01', 'open', '2025-06-10'),
 (3, 3, 'Need handmade candles', 'Looking for custom-scented candles as gifts.', 10, 200.00, 'Los Angeles', '15 miles', '2025-07-10', 'open', '2025-06-12');
 
 -- Offer Table
-INSERT INTO offer (request_id, user_id, offer_description, offer_price, offer_quantity, seller_location, product_link, delivery_time, warranty, offer_date, status)
+INSERT INTO offer (request_id, account_id, offer_description, offer_price, offer_quantity, seller_location, product_link, delivery_time, warranty, offer_date, status)
 VALUES
 (1, 2, 'Dell XPS 13, lightly used, includes charger.', 450.00, 1, 'San Francisco', 'https://example.com/dell-xps13', '3 days', '6 months', '2025-06-11', 'pending'),
 (2, 2, 'Set of 10 soy candles in assorted scents.', 180.00, 10, 'Los Angeles', NULL, '5 days', 'no warranty', '2025-06-13', 'accepted');
