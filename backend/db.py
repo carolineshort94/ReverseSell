@@ -11,7 +11,7 @@ from models import (
     DBAccount,
     Base,
 )
-from schemas import ResquestOut
+from schemas import RequestOut, RequestCreate
 from config import DATABASE_URL
 
 engine = create_engine(DATABASE_URL)
@@ -19,78 +19,57 @@ SessionLocal = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
 
 
-def get_request(user_id: int) -> list[ResquestOut]:
+def get_all_requests() -> list[RequestOut]:
+    db = SessionLocal()
+    db_requests = db.query(DBRequest).all()
+    requests = [RequestOut.from_orm(req) for req in db_requests]
+    db.close()
+    return requests
+
+
+def get_request(user_id: int) -> list[RequestOut]:
     db = SessionLocal()
     db_requests = db.query(DBRequest).filter(DBRequest.user_id == user_id).all()
-    request = []
-    for db_request in db_requests:
-        request.append(
-            {
-                "id": db_request.id,
-                "user_id": db_request.user_id,
-                "category_id": db_request.category_id,
-                "title": db_request.title,
-                "description": db_request.description,
-                "quantity": db_request.quantity,
-                "price_range": db_request.price_range,
-                "location": db_request.location,
-                "location_range": db_request.location_range,
-                "expiry_date": db_request.expiry_date,
-                "status": db_request.status,
-                "post_date": db_request.post_date,
-            }
-        )
+    requests = [RequestOut.from_orm(req) for req in db_requests]
     db.close()
-    return request
+    return requests
 
 
-def update_request(
-    request_id: int,
-    title: str | None = None,
-    description: str | None = None,
-    status: str | None = None,
-    quantity: int | None = None,
-    price_range: int | None = None,
-    location: str | None = None,
-    location_range: str | None = None,
-    expiry_date: datetime | None = None,
-) -> ResquestOut | None:
+def create_request(data: RequestCreate) -> RequestOut:
     db = SessionLocal()
-    db_request = db.query(DBRequest).filter(DBRequest.id == request_id).first()
-
-    # Update the request status or any other fields as needed
-    if status is not None:
-        db_request.status = status
-    if title is not None:
-        db_request.title = title
-    if description is not None:
-        db_request.description = description
-    if quantity is not None:
-        db_request.quantity = quantity
-    if price_range is not None:
-        db_request.price_range = price_range
-    if location is not None:
-        db_request.location = location
-    if location_range is not None:
-        db_request.location_range = location_range
-    if expiry_date is not None:
-        db_request.expiry_date = expiry_date
+    new_request = DBRequest(**data.dict())
+    db.add(new_request)
     db.commit()
-
-    updated_request = ResquestOut(
-        id=db_request.id,
-        user_id=db_request.user_id,
-        category_id=db_request.category_id,
-        title=db_request.title,
-        description=db_request.description,
-        quantity=db_request.quantity,
-        price_range=db_request.price_range,
-        location=db_request.location,
-        location_range=db_request.location_range,
-        expiry_date=db_request.expiry_date,
-        status=db_request.status,
-        post_date=db_request.post_date,
-    )
-
+    db.refresh(new_request)
+    result = RequestOut.from_orm(new_request)
     db.close()
-    return updated_request
+    return result
+
+
+def update_request(request_id: int, data: RequestCreate) -> RequestOut:
+    db = SessionLocal()
+    request_to_update = db.query(DBRequest).filter(DBRequest.id == request_id).first()
+    if not request_to_update:
+        db.close()
+        raise ValueError("Request not found")
+
+    for key, value in data.dict().items():
+        setattr(request_to_update, key, value)
+
+    db.commit()
+    db.refresh(request_to_update)
+    result = RequestOut.from_orm(request_to_update)
+    db.close()
+    return result
+
+
+def delete_request(request_id: int) -> bool:
+    db = SessionLocal()
+    request_to_delete = db.query(DBRequest).filter(DBRequest.id == request_id).first()
+    if not request_to_delete:
+        db.close()
+        return False
+    db.delete(request_to_delete)
+    db.commit()
+    db.close()
+    return True

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, date
 
 
 class LoginCredentials(BaseModel):
@@ -44,6 +44,11 @@ class RequestCreate(BaseModel):
     location: str = Field(..., min_length=1)
     location_range: Optional[str] = None
     expiry_date: Optional[datetime] = None
+    status: Optional[str] = "open"
+    post_date: Optional[date] = date.today()
+
+    class Config:
+        orm_mode = True
 
 
 class RequestUpdate(BaseModel):
@@ -61,15 +66,14 @@ class RequestOut(RequestCreate):
     id: int
     user_id: int
     category_id: int
-    title: Optional[str] = None
-    description: Optional[str] = None
-    quantity: Optional[int] = None
     price_range: Optional[int] = None
-    location: Optional[str] = None
     location_range: Optional[str] = None
     expiry_date: Optional[datetime] = None
     post_date: datetime
     status: Optional[str] = None
+
+    class Config:
+        orm_mode = True
 
 
 class OfferCreate(BaseModel):
