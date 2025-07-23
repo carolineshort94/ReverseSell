@@ -34,6 +34,19 @@ class UserPublicDetails(BaseModel):
     profile_img: Optional[str] = None
 
 
+class AccountOut(BaseModel):
+    id: int
+    email: str
+    firt_name: Optional[str]
+    last_name: Optional[str]
+    contact_phone: Optional[str]
+    profile_description: Optional[str]
+    profile_img: Optional[str]
+
+    class Config:
+        orm_mode = True
+
+
 class RequestCreate(BaseModel):
     user_id: int
     category_id: int

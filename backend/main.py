@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pathlib import Path
@@ -11,6 +11,7 @@ from schemas import (
     OfferOut,
     MessageCreate,
     MessageOut,
+    AccountOut,
 )
 from auth import auth_router
 import db
@@ -32,6 +33,17 @@ app.add_middleware(
 
 # Auth route
 app.include_router(auth_router, prefix="/api")
+
+
+@app.get("/me", response_model=db.AccountOut)
+def get_me(request: Request):
+    session_token = request.cookies.get("session_token")
+    if not session_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    user = db.get_current_user(session_token)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid session token")
+    return user
 
 
 @app.get("/requests", response_model=List[RequestOut])

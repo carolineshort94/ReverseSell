@@ -5,6 +5,7 @@ from models import (
     DBRequest,
     DBOffer,
     DBMessage,
+    DBAccount,
     Base,
 )
 from schemas import (
@@ -14,12 +15,26 @@ from schemas import (
     OfferOut,
     MessageCreate,
     MessageOut,
+    AccountOut,
 )
 from config import DATABASE_URL
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
+
+
+def get_current_user(session_token: str) -> DBAccount | None:
+    db = SessionLocal()
+    account = (
+        db.query(DBAccount).filter(DBAccount.session_token == session_token).first()
+    )
+    if account is None:
+        db.close()
+        return None
+    user = AccountOut.from_orm(account)
+    db.close()
+    return user
 
 
 def get_all_requests() -> list[RequestOut]:
