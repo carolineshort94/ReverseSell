@@ -1,7 +1,6 @@
-from pydantic import BaseModel, Field
 from typing import Optional
-from sqlalchemy.orm import declarative_base, Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import ARRAY, TEXT
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import declarative_base, Mapped, mapped_column
 from datetime import datetime
 
 Base = declarative_base()
@@ -28,8 +27,8 @@ class DBRequest(Base):
     __tablename__ = "request"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(index=True)
-    category_id: Mapped[int] = mapped_column(index=True)
+    account_id: Mapped[int] = mapped_column(ForeignKey("account.id"), index=True)
+    category_id: Mapped[int] = mapped_column(ForeignKey("category.id"), index=True)
     title: Mapped[str] = mapped_column(nullable=False)
     description: Mapped[str] = mapped_column(nullable=False)
     quantity: Mapped[int] = mapped_column(nullable=False)
@@ -53,8 +52,8 @@ class DBOffer(Base):
     __tablename__ = "offer"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    request_id: Mapped[int] = mapped_column(index=True)
-    user_id: Mapped[int] = mapped_column(index=True)
+    request_id: Mapped[int] = mapped_column(ForeignKey("request.id"), index=True)
+    account_id: Mapped[int] = mapped_column(ForeignKey("account.id"), index=True)
     offer_description: Mapped[Optional[str]] = mapped_column(default=None)
     offer_price: Mapped[float] = mapped_column(nullable=False)
     offer_quantity: Mapped[int] = mapped_column(nullable=False)
@@ -66,11 +65,11 @@ class DBOffer(Base):
     status: Mapped[str] = mapped_column(default="pending")
 
 
-class DBProduct_image(Base):
+class DBProductImage(Base):  # Renamed for convention
     __tablename__ = "product_image"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    offer_id: Mapped[int] = mapped_column(index=True)
+    offer_id: Mapped[int] = mapped_column(ForeignKey("offer.id"), index=True)
     upload_date: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     image_url: Mapped[str] = mapped_column(nullable=False)
     order_index: Mapped[int] = mapped_column(nullable=False)
@@ -80,9 +79,11 @@ class DBMessage(Base):
     __tablename__ = "message"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    sender_id: Mapped[int] = mapped_column(index=True)
-    receiver_id: Mapped[int] = mapped_column(index=True)
-    offer_id: Mapped[int] = mapped_column(index=True)
+    sender_id: Mapped[int] = mapped_column(ForeignKey("account.id"), index=True)
+    receiver_id: Mapped[int] = mapped_column(ForeignKey("account.id"), index=True)
+    offer_id: Mapped[int] = mapped_column(ForeignKey("offer.id"), index=True)
     content: Mapped[str] = mapped_column(nullable=False)
     timestamp: Mapped[datetime] = mapped_column(default=datetime.utcnow)
-    is_read: Mapped[bool] = mapped_column(default=False)
+    is_read: Mapped[bool] = mapped_column(
+        default=False, nullable=False
+    )  # Ensure not nullable

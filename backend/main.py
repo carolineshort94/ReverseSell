@@ -18,10 +18,7 @@ import db
 
 app = FastAPI()
 
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-]
+origins = ["http://localhost:8000", "http://localhost:3000", "http://localhost:5173"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,7 +32,7 @@ app.add_middleware(
 app.include_router(auth_router, prefix="/api")
 
 
-@app.get("/me", response_model=db.AccountOut)
+@app.get("/me", response_model=AccountOut)
 def get_me(request: Request):
     session_token = request.cookies.get("session_token")
     if not session_token:

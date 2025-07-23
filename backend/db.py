@@ -45,9 +45,9 @@ def get_all_requests() -> list[RequestOut]:
     return requests
 
 
-def get_request(user_id: int) -> list[RequestOut]:
+def get_request(account_id: int) -> list[RequestOut]:
     db = SessionLocal()
-    db_requests = db.query(DBRequest).filter(DBRequest.user_id == user_id).all()
+    db_requests = db.query(DBRequest).filter(DBRequest.account_id == account_id).all()
     requests = [RequestOut.from_orm(req) for req in db_requests]
     db.close()
     return requests

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from typing import Optional
 from datetime import datetime, date
 
@@ -48,7 +48,7 @@ class AccountOut(BaseModel):
 
 
 class RequestCreate(BaseModel):
-    user_id: int
+    account_id: int
     category_id: int
     title: str = Field(..., min_length=1, max_length=255)
     description: str = Field(..., min_length=1)
@@ -60,15 +60,14 @@ class RequestCreate(BaseModel):
     status: Optional[str] = "open"
     post_date: Optional[date] = date.today()
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RequestUpdate(BaseModel):
     title: Optional[str] = Field(None, min_length=1, max_length=255)
     description: Optional[str] = Field(None, min_length=1)
     quantity: Optional[int] = Field(None, gt=0)
-    price_range: Optional[int] = None
+    price_range: Optional[float] = None
     location: Optional[str] = Field(None, min_length=1)
     location_range: Optional[str] = None
     expiry_date: Optional[datetime] = None
@@ -77,26 +76,17 @@ class RequestUpdate(BaseModel):
 
 class RequestOut(RequestCreate):
     id: int
-    user_id: int
-    category_id: int
-    price_range: Optional[int] = None
-    location_range: Optional[str] = None
-    expiry_date: Optional[datetime] = None
-    post_date: datetime
-    status: Optional[str] = None
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class OfferCreate(BaseModel):
     request_id: int
-    user_id: int
+    account_id: int
     offer_description: Optional[str] = None
     offer_price: Optional[float] = None
     offer_quantity: Optional[int] = None
     seller_location: Optional[str] = None
-    product_link = Optional[str] = None
+    product_link: Optional[str] = None
     delivery_date: Optional[datetime] = None
     warranty: Optional[str] = None
     offer_date: Optional[date] = date.today()
