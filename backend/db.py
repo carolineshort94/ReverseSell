@@ -1,17 +1,20 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from secrets import token_urlsafe
-from datetime import datetime
+
 from models import (
     DBRequest,
-    DBCategory,
     DBOffer,
-    DBProduct_image,
     DBMessage,
-    DBAccount,
     Base,
 )
-from schemas import RequestOut, RequestCreate, OfferCreate, OfferOut
+from schemas import (
+    RequestOut,
+    RequestCreate,
+    OfferCreate,
+    OfferOut,
+    MessageCreate,
+    MessageOut,
+)
 from config import DATABASE_URL
 
 engine = create_engine(DATABASE_URL)
@@ -109,3 +112,30 @@ def update_offer(offer_id: int, data: OfferCreate) -> OfferOut:
     result = OfferOut.from_orm(offer_to_update)
     db.close()
     return result
+
+
+def get_offers_by_user(user_id: int) -> list[OfferOut]:
+    db = SessionLocal()
+    db_offers = db.query(DBOffer).filter(DBOffer.user_id == user_id).all()
+    offers = [OfferOut.from_orm(offer) for offer in db_offers]
+    db.close()
+    return offers
+
+
+def send_message(data: MessageCreate) -> MessageOut:
+    db = SessionLocal()
+    new_message = MessageOut(**data.dict())
+    db.add(new_message)
+    db.commit()
+    db.refresh(new_message)
+    result = MessageOut.from_orm(new_message)
+    db.close()
+    return result
+
+
+def get_messages_by_offer(offer_id: int) -> list[MessageOut]:
+    db = SessionLocal()
+    db_messages = db.query(DBMessage).filter(DBMessage.offer_id == offer_id).all()
+    messages = [MessageOut.from_orm(msg) for msg in db_messages]
+    db.close()
+    return messages

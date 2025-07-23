@@ -4,7 +4,14 @@ from fastapi.responses import FileResponse
 from pathlib import Path
 from typing import List
 
-from schemas import RequestOut, RequestCreate
+from schemas import (
+    RequestOut,
+    RequestCreate,
+    OfferCreate,
+    OfferOut,
+    MessageCreate,
+    MessageOut,
+)
 from auth import auth_router
 import db
 
@@ -59,6 +66,48 @@ def delete_request(request_id: int):
     if not success:
         raise HTTPException(status_code=404, detail="Request not found")
     return success
+
+
+@app.post("/offers", response_model=OfferOut)
+def create_offer(data: OfferCreate):
+    return db.create_offer(data)
+
+
+@app.get("/offers/request/{request_id}", response_model=List[OfferOut])
+def get_offers_by_request(request_id: int):
+    offers = db.get_offers_by_request(request_id)
+    if not offers:
+        raise HTTPException(status_code=404, detail="No offers found for this request")
+    return offers
+
+
+@app.get("/offers/user/{user_id}", response_model=List[OfferOut])
+def get_offers_by_user(user_id: int):
+    offers = db.get_offers_by_user(user_id)
+    if not offers:
+        raise HTTPException(status_code=404, detail="No offers found for this user")
+    return offers
+
+
+@app.put("/offers/{offer_id}", response_model=OfferOut)
+def update_offer(offer_id: int, data: OfferCreate):
+    try:
+        return db.update_offer(offer_id, data)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@app.post("/messages", response_model=MessageOut)
+def create_message(data: MessageCreate):
+    return db.send_message(data)
+
+
+@app.get("/messages/offer/{offer_id}", response_model=List[MessageOut])
+def get_messages_by_offer(offer_id: int):
+    messages = db.get_messages_by_offer(offer_id)
+    if not messages:
+        raise HTTPException(status_code=404, detail="No messages found for this offer")
+    return messages
 
 
 @app.get("/{file_path:path}", response_class=FileResponse)

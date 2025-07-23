@@ -107,14 +107,13 @@ class MessageCreate(BaseModel):
     sender_id: int
     receiver_id: int
     offer_id: int
-    content: str = Field(..., min_length=1)
+    content: str
+    timestamp: Optional[date] = date.today()
+    is_read: Optional[bool] = False
 
-
-class MessageUpdate(BaseModel):
-    content: Optional[str] = Field(None, min_length=1)
+    class Config:
+        orm_mode = True
 
 
 class MessageOut(MessageCreate):
     id: int
-    timestamp: datetime
-    is_read: bool = False
