@@ -15,10 +15,10 @@ export default function Header() {
                 <a onClick={() => navigate("/my-requests")}>My Requests</a>
                 <a onClick={() => navigate("/my-offers")}>My Offers</a>
                 {user ? (
-                    <a onClick={() => navigate("/logout")}>Logout</a>
+                    <a className="white-btn" onClick={() => navigate("/logout")}>Logout</a>
                 ) : (
                     <>
-                        <a onClick={() => navigate("/login")}>Login</a>
+                        <a className="white-btn" onClick={() => navigate("/login")}>Login/Register</a>
 
                     </>
                 )}

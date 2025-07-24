@@ -16,12 +16,13 @@
 
 .nav-links {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
+    align-items: center;
 }
 
 .nav-links a {
-    background-color: white;
-    color: #2563eb;
+    background-color: linear-gradient(to right, #3b82f6, #2563eb);
+    color: white;
     font-weight: bold;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
@@ -29,8 +30,20 @@
     text-decoration: none;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-links a.white-btn {
+    background-color: white;
+    color: #2563eb;
 }
 
 .nav-links a:hover {
-    background-color: #dbeafe;
+    background-color: #dbeafe29;
+}
+
+.nav-links a.white-btn:hover {
+    background-color: #dbeafe29;
+    color: white
 }
