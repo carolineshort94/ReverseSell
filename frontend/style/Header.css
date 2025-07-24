@@ -1,27 +1,36 @@
-.hearder {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background-color: linear-gradient(to right, #2563eb, #6366f1);
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #3b82f6, #2563eb);
     color: white;
+    font-weight: bold;
 }
 
 .logo {
-    font-size: 1.25rem;
+    font-size: 1.75rem;
     font-weight: bold;
     cursor: pointer;
 }
 
-.nav button {
-    margin-left: 1rem;
-    background: transparent;
-    border: none;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
+.nav-links {
+    display: flex;
+    gap: 1rem;
 }
 
-.nav button:hover {
-    text-decoration: underline;
+.nav-links a {
+    background-color: white;
+    color: #2563eb;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.nav-links a:hover {
+    background-color: #dbeafe;
 }

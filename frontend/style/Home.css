@@ -1,25 +1,46 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background-color: #f3f4f6;
-}
-
-.page {
+.main-content {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.header {
-    background: linear-gradient(90deg, #2563eb, #3b82f6);
+/* Sidebar styles */
+.sidebar {
+    width: 25%;
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+    flex: 0 0 300px;
+}
+
+/* Requests styles */
+.requests {
+    width: 75%;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    flex: 1;
+}
+
+.primary-btn,
+.secondary-btn,
+.load-btn {
+    display: inline-block;
+    background-color: #2563eb;
     color: white;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0.5rem 1rem;
+    border: none;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.logo {
-    fon
+.load-btn {
+    background-color: #2563eb;
+}

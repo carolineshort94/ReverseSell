@@ -1,6 +1,6 @@
 import { userAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import "../style/Header.css"; // Assuming you have a CSS file for styling
+import "../style/Header.css";
 import React from "react"
 
 export default function Header() {
@@ -10,16 +10,16 @@ export default function Header() {
     return (
         <header className="header">
             <h1 className="logo" onClick={() => navigate("/")}>Reverse Sell</h1>
-            <nav className="nav">
-                <button onClick={() => navigate("/")}>Home</button>
-                <button onClick={() => navigate("/my-requests")}>My Requests</button>
-                <button onClick={() => navigate("/my-offers")}>My Offers</button>
+            <nav className="nav-links">
+                <a onClick={() => navigate("/")}>Home</a>
+                <a onClick={() => navigate("/my-requests")}>My Requests</a>
+                <a onClick={() => navigate("/my-offers")}>My Offers</a>
                 {user ? (
-                    <button onClick={() => navigate("/logout")}>Logout</button>
+                    <a onClick={() => navigate("/logout")}>Logout</a>
                 ) : (
                     <>
-                        <button onClick={() => navigate("/login")}>Login</button>
-                        <button onClick={() => navigate("signup")}>Reverse</button>
+                        <a onClick={() => navigate("/login")}>Login</a>
+
                     </>
                 )}
             </nav>
