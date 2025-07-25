@@ -1,8 +1,64 @@
 .request-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    margin-bottom: 1rem;
     transition: box-shadow 0.2s ease;
-    ;
+
 }
 
 .request-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.request-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.request-description {
+    font-size: 1.15rem;
+    color: #4B5563;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.tag-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.tag-pill {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    color: #111827;
+    background-color: #E5E7EB;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: #6B7280;
+}
+
+.details-link {
+    background: none;
+    border: none;
+    color: #2563EB;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none
+}
+
+.details-link:hover {
+    text-decoration: underline;
 }

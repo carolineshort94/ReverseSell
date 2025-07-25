@@ -48,6 +48,12 @@
     gap: 1rem;
 }
 
+.requests h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
 .request-card {
     background: #fff;
     border-radius: 0.5rem;
@@ -78,7 +84,8 @@
 }
 
 .load-btn {
-    background-color: #2563eb;
+    background-color: #d2d3d4;
+    color: #6c6d6d;
 }
 
 .sidebar-divider {
