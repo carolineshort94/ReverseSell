@@ -42,6 +42,21 @@
     background-color: #E5E7EB;
 }
 
+.tag-pill.electronics {
+    background-color: #DDF4FF;
+    color: #0077B6;
+}
+
+.tag-pill.furniture {
+    background-color: #FDEBD2;
+    color: #A85B00;
+}
+
+.tag-pill.handmade {
+    background-color: #F3DFF5;
+    color: #973AA8;
+}
+
 .card-footer {
     display: flex;
     justify-content: space-between;
