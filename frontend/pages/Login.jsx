@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userAuth } from "../context/AuthContext";
+import "../style/Login.css";
 
 
 const API_BASE = "http://localhost:8000";
@@ -43,10 +44,10 @@ export default function Login() {
 
 
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleLogin}>
-                <div>
+        <div className="login-wrapper">
+            <form className="login-form" onSubmit={handleLogin}>
+                <h2 >Login</h2>
+                <div className="form-group">
                     <label>Username:</label>
                     <input
                         type="text"
@@ -55,7 +56,7 @@ export default function Login() {
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Password:</label>
                     <input
                         type="password"
@@ -66,7 +67,7 @@ export default function Login() {
                 </div>
                 <button type="submit">Login</button>
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
         </div>
     )
 }
