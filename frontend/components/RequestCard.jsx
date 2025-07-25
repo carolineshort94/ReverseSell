@@ -19,7 +19,11 @@ const RequestCard = ({ request, isLoggedIn, onOfferClick }) => {
             </div>
 
             <div className='card-footer'>
-                <span className='expiry-date'> Expires in: {request.expiry_date}</span>
+                <span className='expiry-date'> Expires in: {new Date(request.expiry_date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                })}</span>
                 <button
                     className='details-link'
                     onClick={() => onOfferClick(request)} >
