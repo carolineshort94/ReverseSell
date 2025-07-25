@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, joinedload
 
 from models import (
     DBRequest,
@@ -39,7 +39,9 @@ def get_current_user(session_token: str) -> DBAccount | None:
 
 def get_all_requests() -> list[RequestOut]:
     db = SessionLocal()
-    db_requests = db.query(DBRequest).all()
+    db_requests = (
+        db.query(DBRequest).options(joinedload(DBRequest.category)).all()
+    )  # Eager load category
     requests = [RequestOut.from_orm(req) for req in db_requests]
     db.close()
     return requests

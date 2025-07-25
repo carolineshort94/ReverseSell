@@ -8,15 +8,18 @@ const RequestCard = ({ request, isLoggedIn, onOfferClick }) => {
             <p className='request-description'>{request.description}</p>
 
             <div className='tag-container'>
-                {request.category && request.category.map((tag) => (
-                    <span key={tag} className={`tag-pill ${tag.toLowerCase().replace(/[^a-z0-9-]/g, '-')}`}>
-                        {tag}
+                {request.category && (
+                    <span
+                        key={request.category.name}
+                        className={`tag-pill ${request.category.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
+                        {request.category.name}
                     </span>
-                ))}
+                )}
+
             </div>
 
             <div className='card-footer'>
-                <span className='expiry-date'> Expires in: {request.deadline}</span>
+                <span className='expiry-date'> Expires in: {request.expiry_date}</span>
                 <button
                     className='details-link'
                     onClick={() => onOfferClick(request)} >

@@ -47,6 +47,15 @@ class AccountOut(BaseModel):
         orm_mode = True
 
 
+class CategoryOut(BaseModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
 class RequestCreate(BaseModel):
     account_id: int
     category_id: int
@@ -76,7 +85,10 @@ class RequestUpdate(BaseModel):
 
 class RequestOut(RequestCreate):
     id: int
-    model_config = ConfigDict(from_attributes=True)
+    category: CategoryOut
+
+    class Config:
+        from_attributes = True
 
 
 class OfferCreate(BaseModel):
