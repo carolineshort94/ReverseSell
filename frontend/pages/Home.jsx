@@ -37,14 +37,18 @@ export default function HomePage() {
             <main className="main-content">
                 <aside className="sidebar">
                     <h2>What do you need?</h2>
-                    <p>Tell us what product or service you're looking for!</p>
+                    <p>Tell us what product or service you're looking for, and let sellers bring their best offers to you!</p>
                     <button className="primary-btn" onClick={() => {
                         if (!user) return window.location.href = "/login";
                         window.location.href = "/create-request";
-                    }}></button>
+                    }}>
+                        Post a New Request
+                    </button>
+
+                    <hr className="sidebar-divider" />
 
                     <h2>Are you a Seller?</h2>
-                    <p>Find matching requests and submit your offers.</p>
+                    <p>Find requests matching your products and submit competitive offers directly to buyers.</p>
                     <button className="secondary-btn" onClick={() => {
                         window.scrollTo({ top: 0, behavior: 'smooth' })
                     }}>View Open Requests</button>
