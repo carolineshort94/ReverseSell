@@ -127,7 +127,7 @@ export default function Login() {
 
 
 
-                    <button type="button" className="google-btn">
+                    <button onClick={handleGoogleLogin} type="button" className="google-btn">
                         <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google logo" className="google-logo" />
                         Sign in with Google
                     </button>
