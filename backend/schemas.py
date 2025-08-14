@@ -80,6 +80,8 @@ class RequestUpdate(BaseModel):
     expiry_date: Optional[datetime] = None
     status: Optional[str] = None
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class RequestOut(RequestCreate):
     id: int

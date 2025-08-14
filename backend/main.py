@@ -7,6 +7,7 @@ from typing import List
 from schemas import (
     RequestOut,
     RequestCreate,
+    RequestUpdate,
     OfferCreate,
     OfferOut,
     MessageCreate,
@@ -50,9 +51,9 @@ def get_all_requests():
 
 @app.get("/requests/user/{user_id}", response_model=List[RequestOut])
 def get_requests_by_user(user_id: int):
-    requests = db.get_request(user_id)
+    requests = db.get_requests_by_user(user_id)
     if not requests:
-        raise HTTPException(status_code=404, detail="No requests found for this user")
+        raise HTTPException(status_code=200, detail="No requests found for this user")
     return requests
 
 
@@ -62,7 +63,7 @@ def create_request(data: RequestCreate):
 
 
 @app.put("/requests/{request_id}", response_model=RequestOut)
-def update_request(request_id: int, data: RequestCreate):
+def update_request(request_id: int, data: RequestUpdate):
     try:
         return db.update_request(request_id, data)
     except ValueError as e:
