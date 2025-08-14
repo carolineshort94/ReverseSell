@@ -37,14 +37,12 @@ class UserPublicDetails(BaseModel):
 class AccountOut(BaseModel):
     id: int
     email: str
-    firt_name: Optional[str]
-    last_name: Optional[str]
-    contact_phone: Optional[str]
-    profile_description: Optional[str]
-    profile_img: Optional[str]
-
-    class Config:
-        orm_mode = True
+    firt_name: Optional[str] = None
+    last_name: Optional[str] = None
+    contact_phone: Optional[str] = None
+    profile_description: Optional[str] = None
+    profile_img: Optional[str] = None
+    model_config = ConfigDict(from_attributes=True)
 
 
 class CategoryOut(BaseModel):

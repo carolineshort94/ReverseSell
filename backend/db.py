@@ -24,7 +24,7 @@ SessionLocal = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
 
 
-def get_current_user(session_token: str) -> DBAccount | None:
+def get_current_user(session_token: str) -> AccountOut | None:
     db = SessionLocal()
     account = (
         db.query(DBAccount).filter(DBAccount.session_token == session_token).first()
@@ -34,7 +34,7 @@ def get_current_user(session_token: str) -> DBAccount | None:
         return None
     user = AccountOut.from_orm(account)
     db.close()
-    return user
+    return user if account else None
 
 
 def get_all_requests() -> list[RequestOut]:
@@ -133,7 +133,7 @@ def update_offer(offer_id: int, data: OfferCreate) -> OfferOut:
 
 def get_offers_by_user(user_id: int) -> list[OfferOut]:
     db = SessionLocal()
-    db_offers = db.query(DBOffer).filter(DBOffer.user_id == user_id).all()
+    db_offers = db.query(DBOffer).filter(DBOffer.account_id == user_id).all()
     offers = [OfferOut.from_orm(offer) for offer in db_offers]
     db.close()
     return offers
@@ -141,7 +141,7 @@ def get_offers_by_user(user_id: int) -> list[OfferOut]:
 
 def send_message(data: MessageCreate) -> MessageOut:
     db = SessionLocal()
-    new_message = MessageOut(**data.dict())
+    new_message = DBMessage(**data.dict())
     db.add(new_message)
     db.commit()
     db.refresh(new_message)
