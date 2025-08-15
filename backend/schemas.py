@@ -4,12 +4,12 @@ from datetime import datetime, date
 
 
 class LoginCredentials(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 
 class SignupCredentials(BaseModel):
-    email: EmailStr
+    email: str
     password: str
     first_name: str
     last_name: str
@@ -25,7 +25,7 @@ class SecretResponse(BaseModel):
 
 
 class UserPublicDetails(BaseModel):
-    email: EmailStr
+    email: str
     first_name: str
     last_name: str
     contact_phone: str

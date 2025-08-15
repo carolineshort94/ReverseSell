@@ -20,7 +20,12 @@ import db
 
 app = FastAPI()
 
-origins = ["http://localhost:8000", "http://localhost:3000", "http://localhost:5173"]
+origins = [
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
 app.add_middleware(SessionMiddleware, secret_key="change-me")
 app.add_middleware(
