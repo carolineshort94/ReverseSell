@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from starlette.middleware.sessions import SessionMiddleware
 from pathlib import Path
 from typing import List
 
@@ -21,6 +22,7 @@ app = FastAPI()
 
 origins = ["http://localhost:8000", "http://localhost:3000", "http://localhost:5173"]
 
+app.add_middleware(SessionMiddleware, secret_key="change-me")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
