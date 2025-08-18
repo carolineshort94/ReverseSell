@@ -4,8 +4,7 @@ from fastapi.responses import FileResponse
 from starlette.middleware.sessions import SessionMiddleware
 from pathlib import Path
 from typing import List
-
-from schemas import (
+from .schemas import (
     RequestOut,
     RequestCreate,
     RequestUpdate,
@@ -15,8 +14,8 @@ from schemas import (
     MessageOut,
     AccountOut,
 )
-from auth import auth_router
-import db
+from .auth import auth_router
+from . import db
 
 app = FastAPI()
 
@@ -66,7 +65,7 @@ def get_requests_by_user(user_id: int):
 
 @app.post("/requests", response_model=RequestOut)
 def create_request(data: RequestCreate):
-    return db.create_request(data)
+    return create_request(data)
 
 
 @app.put("/requests/{request_id}", response_model=RequestOut)

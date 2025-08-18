@@ -1,14 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
 
-from models import (
+from .models import (
     DBRequest,
     DBOffer,
     DBMessage,
     DBAccount,
     Base,
 )
-from schemas import (
+from .schemas import (
     RequestOut,
     RequestCreate,
     OfferCreate,
@@ -17,7 +17,7 @@ from schemas import (
     MessageOut,
     AccountOut,
 )
-from config import DATABASE_URL
+from .config import DATABASE_URL
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)

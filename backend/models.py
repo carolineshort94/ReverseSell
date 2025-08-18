@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import declarative_base, Mapped, mapped_column, relationship
 from datetime import datetime

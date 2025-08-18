@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException, Request, Depends
-from schemas import (
+from .schemas import (
     SignupCredentials,
     LoginCredentials,
     SucessResponse,
     UserPublicDetails,
     SecretResponse,
 )
-from utils import (
+from .utils import (
     create_user_account,
     validate_email_password,
     validate_session,
@@ -41,8 +41,11 @@ async def sigup(credentials: SignupCredentials, request: Request):
     if not created:
         raise HTTPException(status_code=409, detail="Email already exists")
 
-    # Auto login after sigup
+    # Auto-login after signup
     token = validate_email_password(credentials.email, credentials.password)
+    if not token:
+        # should not happen if just created, but be safe
+        raise HTTPException(status_code=500, detail="Could not create session")
     request.session["email"] = credentials.email
     request.session["session_token"] = token
     return SucessResponse(success=True)
@@ -58,12 +61,13 @@ async def login(credentials: LoginCredentials, request: Request):
     return SucessResponse(success=True)
 
 
-@auth_router.get("/logout", response_model=SucessResponse)
+@auth_router.post("/logout", response_model=SucessResponse)
 async def logout(request: Request):
     email = request.session.get("email")
     token = request.session.get("session_token")
     if email and token:
-        invalidate_session(email, token)
+        # your utilist.invalidate_session(email) takes only email
+        invalidate_session(email)
         request.session.clear()
         return SucessResponse(success=True)
     return SucessResponse(success=False)
