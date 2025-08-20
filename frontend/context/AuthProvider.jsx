@@ -3,7 +3,6 @@ import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
-const API_BASE = "http://localhost:8000";
 
 /**
  * AuthProvider component to manage user auth state and provide context
@@ -16,7 +15,7 @@ export function AuthProvider({ children }) {
 
     const refreshUser = useCallback(async () => {
         try {
-            const res = await fetch(`${API_BASE}/api/me`, {
+            const res = await fetch(`/api/me`, {
                 credentials: "include"
             });
             if (res.ok) {
@@ -32,8 +31,8 @@ export function AuthProvider({ children }) {
 
     const logout = async () => {
         try {
-            await fetch(`${API_BASE}/api/logout`, {
-                method: "GET",
+            await fetch(`$/api/logout`, {
+                method: "POST",
                 credentials: "include",
             });
         } catch (err) {

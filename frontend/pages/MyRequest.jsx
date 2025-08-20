@@ -4,19 +4,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../style/MyRequest.css";
 
-// Same style as your Signup.jsx — plain fetch + credentials
-const API_BASE = "http://localhost:8000";
-
-/**
- * Uses YOUR endpoints:
- *   GET /me                                 -> current account (expects { id, ... })
- *   GET /requests/user/{user_id}            -> list of this user's requests
- *
- * The page normalizes fields so it works if your RequestOut returns:
- *   - expiry_date (DB) or expires_at (API)—both handled
- *   - offers_count or nested offers[] — both handled
- *   - category_name or category.name — both handled
- */
 
 export default function MyRequests() {
     const [items, setItems] = useState([]);
@@ -33,7 +20,7 @@ export default function MyRequests() {
         (async () => {
             try {
                 // 1) Who am I?
-                const meRes = await fetch(`${API_BASE}/me`, { credentials: "include" });
+                const meRes = await fetch(`/api/me`, { credentials: "include" });
                 if (!meRes.ok) {
                     const txt = await meRes.text();
                     throw new Error(txt || "Not authenticated");
@@ -43,7 +30,7 @@ export default function MyRequests() {
                 if (!userId) throw new Error("Missing user id from /me response");
 
                 // 2) My requests
-                const reqRes = await fetch(`${API_BASE}/requests/user/${userId}`, { credentials: "include" });
+                const reqRes = await fetch(`/api/requests/user/${userId}`, { credentials: "include" });
                 if (!reqRes.ok) {
                     // If backend returns 200 with HTTPException(detail=...), this won't run.
                     // This branch is for real non-200 errors.

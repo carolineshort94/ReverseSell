@@ -15,7 +15,11 @@ const RequestCard = ({ request, isLoggedIn, onOfferClick }) => {
                         {request.category.name}
                     </span>
                 )}
-
+                {request.tags && request.tags.map((tag) => (
+                    <span key={tag} className={`tag-pill ${tag.toLowerCase().replace(/[^a-z0-9-]/g, '-')}`}>
+                        {tag}
+                    </span>
+                ))}
             </div>
 
             <div className='card-footer'>

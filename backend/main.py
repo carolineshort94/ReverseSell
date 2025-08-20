@@ -39,17 +39,6 @@ app.add_middleware(
 app.include_router(auth_router, prefix="/api")
 
 
-@app.get("/me", response_model=AccountOut)
-def get_me(request: Request):
-    session_token = request.cookies.get("session_token")
-    if not session_token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    user = db.get_current_user(session_token)
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid session token")
-    return user
-
-
 @app.get("/requests", response_model=List[RequestOut])
 def get_all_requests():
     return db.get_all_requests()
@@ -65,7 +54,7 @@ def get_requests_by_user(user_id: int):
 
 @app.post("/requests", response_model=RequestOut)
 def create_request(data: RequestCreate):
-    return create_request(data)
+    return db.create_request(data)
 
 
 @app.put("/requests/{request_id}", response_model=RequestOut)

@@ -11,7 +11,7 @@ export default function HomePage() {
     const [requests, setRequests] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:8000/requests", {
+        fetch("/requests", {
             credentials: "include",
         })
             .then((res) => res.json())

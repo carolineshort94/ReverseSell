@@ -6,11 +6,11 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 
+
 import { auth, provider } from "../context/firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 
 
-const API_BASE = "http://localhost:8000";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ export default function Login() {
         setError("");
 
         try {
-            const res = await fetch(`${API_BASE}/api/login`, {
+            const res = await fetch(`/api/login`, {
                 method: "POST",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
@@ -38,8 +38,12 @@ export default function Login() {
                 await refreshUser();
                 navigate("/");
             } else {
+                let msg = "Login failed";
+                if (res.status === 401) {
+                    msg = "Invalid email or password";
+                }
                 const data = await res.json();
-                setError(data.detail || "Login failed")
+                setError(data.detail || msg);
             }
 
         } catch (err) {
@@ -53,7 +57,7 @@ export default function Login() {
             const result = await signInWithPopup(auth, provider);
             const token = await result.user.getIdToken();
 
-            const res = await fetch(`${API_BASE}/api/firebase-login`, {
+            const res = await fetch(`/api/firebase-login`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

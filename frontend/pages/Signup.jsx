@@ -8,7 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 import "../style/Signup.css";
 
 
-const API_BASE = "http://localhost:8000";
+
 
 export default function Signup() {
     const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ export default function Signup() {
         }
 
         try {
-            const res = await fetch(`${API_BASE}/api/signup`, {
+            const res = await fetch(`api/signup`, {
                 method: "POST",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
