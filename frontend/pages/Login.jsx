@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 import { auth, provider } from "../context/firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 
-
+const BASE = `${window.location.protocol}//${window.location.hostname}:8000`;
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ export default function Login() {
         setError("");
 
         try {
-            const res = await fetch(`/api/login`, {
+            const res = await fetch(`${BASE}/login`, {
                 method: "POST",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
@@ -57,7 +57,7 @@ export default function Login() {
             const result = await signInWithPopup(auth, provider);
             const token = await result.user.getIdToken();
 
-            const res = await fetch(`/api/firebase-login`, {
+            const res = await fetch(`/firebase-login`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

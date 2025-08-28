@@ -5,13 +5,14 @@ import RequestCard from "../components/RequestCard";
 import { AuthContext } from "../context/AuthContext";
 import "../style/Home.css"
 
+const BASE = "http://127.0.0.1:8000";
 
 export default function HomePage() {
     const { user } = useContext(AuthContext);
     const [requests, setRequests] = useState([])
 
     useEffect(() => {
-        fetch("/requests", {
+        fetch(`${BASE}/requests`, {
             credentials: "include",
         })
             .then((res) => res.json())

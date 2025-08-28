@@ -68,6 +68,7 @@ def invalidate_session(email: str) -> Optional[UserPublicDetails]:
             return None
 
         details = UserPublicDetails(
+            id=account.id,
             email=account.email,
             first_name=account.first_name,
             last_name=account.last_name,
@@ -90,6 +91,7 @@ def get_user_public_details(email: str) -> Optional[UserPublicDetails]:
         if not account:
             return None
         return UserPublicDetails(
+            id=account.id,
             email=account.email,
             first_name=account.first_name,
             last_name=account.last_name,

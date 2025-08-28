@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../style/MyRequest.css";
+import "../style/RequestCard.css"
 
+const BASE = `${window.location.protocol}//${window.location.hostname}:8000`;
 
 export default function MyRequests() {
     const [items, setItems] = useState([]);
@@ -20,7 +22,7 @@ export default function MyRequests() {
         (async () => {
             try {
                 // 1) Who am I?
-                const meRes = await fetch(`/api/me`, { credentials: "include" });
+                const meRes = await fetch(`${BASE}/me`, { credentials: "include" });
                 if (!meRes.ok) {
                     const txt = await meRes.text();
                     throw new Error(txt || "Not authenticated");
@@ -30,7 +32,7 @@ export default function MyRequests() {
                 if (!userId) throw new Error("Missing user id from /me response");
 
                 // 2) My requests
-                const reqRes = await fetch(`/api/requests/user/${userId}`, { credentials: "include" });
+                const reqRes = await fetch(`${BASE}/requests/user/${userId}`, { credentials: "include" });
                 if (!reqRes.ok) {
                     // If backend returns 200 with HTTPException(detail=...), this won't run.
                     // This branch is for real non-200 errors.
@@ -184,13 +186,13 @@ function RequestCard({ r, onNavigate }) {
     const tags = (r.tags && r.tags.length) ? r.tags : (r.category_name ? [r.category_name] : []);
 
     return (
-        <article className="myreq-card">
+        <article className="request-card">
             <div className="myreq-card-head">
-                <h3 className="myreq-card-title">{r.title}</h3>
+                <h3 className="request-title">{r.title}</h3>
                 <StatusBadge status={uiStatus} />
             </div>
 
-            <p className="myreq-card-desc">{r.description}</p>
+            <p className="request-description">{r.description}</p>
 
             <div className="myreq-tags">
                 {tags.map((t, i) => (
@@ -198,7 +200,7 @@ function RequestCard({ r, onNavigate }) {
                 ))}
             </div>
 
-            <div className="myreq-card-foot">
+            <div className="card-footer">
                 <div className="myreq-meta">
                     {isClosed ? (
                         <>

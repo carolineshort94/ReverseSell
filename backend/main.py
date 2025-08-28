@@ -36,7 +36,7 @@ app.add_middleware(
 )
 
 # Auth route
-app.include_router(auth_router, prefix="/api")
+app.include_router(auth_router)
 
 
 @app.get("/requests", response_model=List[RequestOut])

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
 
+const BASE = `${window.location.protocol}//${window.location.hostname}:8000`;
+
 /**
  * AuthProvider component to manage user auth state and provide context
  * @param {{children: import('react').ReactNode}} props
@@ -15,7 +17,7 @@ export function AuthProvider({ children }) {
 
     const refreshUser = useCallback(async () => {
         try {
-            const res = await fetch(`/api/me`, {
+            const res = await fetch(`${BASE}/me`, {
                 credentials: "include"
             });
             if (res.ok) {
@@ -31,7 +33,7 @@ export function AuthProvider({ children }) {
 
     const logout = async () => {
         try {
-            await fetch(`$/api/logout`, {
+            await fetch(`${BASE}/logout`, {
                 method: "POST",
                 credentials: "include",
             });

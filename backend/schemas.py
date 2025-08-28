@@ -25,6 +25,7 @@ class SecretResponse(BaseModel):
 
 
 class UserPublicDetails(BaseModel):
+    id: int
     email: str
     first_name: str
     last_name: str
